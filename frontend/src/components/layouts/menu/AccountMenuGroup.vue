@@ -5,12 +5,14 @@ import MenuItem from './MenuItem.vue';
 import AccountMenuItem from './AccountMenuItem.vue';
 import LogoutMenuItem from './LogoutMenuItem.vue';
 import config from '@/config';
+import { useAuthStore } from '@/stores/auth';
 
 const { login, join } = config.accountMenus;
+const auth = useAuthStore();
 
 // 임시 로그인 상태 (추후 Pinia store로 대체)
-const isLogin = computed(() => false);
-const username = computed(() => '');
+const isLogin = computed(() => auth.isLogin);
+const username = computed(() => auth.username);
 </script>
 
 <template>
