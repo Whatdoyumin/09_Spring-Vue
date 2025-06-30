@@ -1,27 +1,15 @@
 <!-- 계정 메뉴 그룹 컴포넌트 -->
 <script setup>
-import { computed } from 'vue';
-import MenuItem from './MenuItem.vue';
-import AccountMenuItem from './AccountMenuItem.vue';
-import LogoutMenuItem from './LogoutMenuItem.vue';
-import config from '@/config';
+const props = defineProps({ username: String });
 
-const { login, join } = config.accountMenus;
-
-// 임시 로그인 상태 (추후 Pinia store로 대체)
-const isLogin = computed(() => false);
-const username = computed(() => '');
+const avatar = `/api/member/${props.username}/avatar`;
 </script>
 
 <template>
-  <ul class="navbar-nav ms-auto">
-    <template v-if="isLogin">
-      <AccountMenuItem :username="username" />
-      <LogoutMenuItem />
-    </template>
-    <template v-else>
-      <MenuItem :menu="login" />
-      <MenuItem :menu="join" />
-    </template>
-  </ul>
+  <li class="nav-item">
+    <router-link class="nav-link" to="/auth/profile">
+      <img :src="avatar" class="avatar avatar-sm" />
+      {{ username }}
+    </router-link>
+  </li>
 </template>
