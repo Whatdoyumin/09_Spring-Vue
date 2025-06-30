@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.DecimalFormat;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.multipart.MultipartFile;
@@ -47,9 +48,9 @@ public class UploadFiles {
    * @return 포맷된 문자열 (예: 1.2 MB)
    */
   public static String getFormatSize(Long size) {
-      if (size <= 0) {
-          return "0";
-      }
+    if (size <= 0) {
+      return "0";
+    }
 
     final String[] units = new String[]{"Bytes", "KB", "MB", "GB", "TB"};
     int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
@@ -72,6 +73,22 @@ public class UploadFiles {
         BufferedOutputStream bos = new BufferedOutputStream(os)
     ) {
       Files.copy(file.toPath(), bos);
+    }
+  }
+
+  public static void downloadImage(HttpServletResponse response, File file) {
+    try {
+      Path path = Path.of(file.getPath());
+      String mimeType = Files.probeContentType(path);
+      response.setContentType(mimeType);
+      response.setContentLength((int) file.length());
+
+      try (OutputStream os = response.getOutputStream();
+          BufferedOutputStream bos = new BufferedOutputStream(os)) {
+        Files.copy(path, bos);
+      }
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
   }
 }
