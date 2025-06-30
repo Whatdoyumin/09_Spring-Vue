@@ -35,7 +35,7 @@
 
   <insert id="insert">
     INSERT INTO tbl_member
-    VALUES (#{username}, #{[password}, #{email}, now(), now())
+    VALUES (#{username}, #{password}, #{email}, now(), now())
   </insert>
 
   <insert id="insertAuth">

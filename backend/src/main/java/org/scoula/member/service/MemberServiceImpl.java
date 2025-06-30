@@ -26,7 +26,7 @@ public class MemberServiceImpl implements MemberService {
   @Override
   public boolean checkDuplicate(String username) {
     MemberVO member = mapper.findByUsername(username);
-    return member != null ? true : false;
+    return member != null;
   }
 
   @Override
