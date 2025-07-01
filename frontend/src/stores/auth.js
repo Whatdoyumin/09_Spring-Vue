@@ -9,6 +9,7 @@ const initState = {
     email: '',
     roles: [],
   },
+  avatarTimestamp: Date.now(), // (1) 아바타 이미지 경로에 추가할 쿼리스트링 값 (타임스탬프)
 };
 
 export const useAuthStore = defineStore('auth', () => {
@@ -23,6 +24,22 @@ export const useAuthStore = defineStore('auth', () => {
   // 로그인 사용자 email
   const email = computed(() => state.value.user.email);
 
+  // (2) 로그인 여부에 따라 아바타 이미지 다운로드 주소 변경
+  const avatarUrl = computed(() =>
+    state.value.user.username
+      ? `/api/member/${state.value.user.username}/avatar?t=${state.value.avatarTimestamp}`
+      : null
+  );
+
+  /* 액션 메서드 작성 영역 */
+
+  // (3) 아바타 업데이트 액션 추가
+  const updateAvatar = () => {
+    state.value.avatarTimestamp = Date.now();
+    localStorage.setItem('auth', JSON.stringify(state.value));
+  };
+
+  // 로그인 액션
   const login = async (member) => {
     state.value.token = 'test token';
     state.value.user = {
@@ -59,6 +76,7 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.setItem('auth', JSON.stringify(state.value));
   };
 
+  // 스토어 초기화 시 자동 실행
   load();
 
   return {
@@ -70,5 +88,8 @@ export const useAuthStore = defineStore('auth', () => {
     login,
     logout,
     getToken,
+    // (4) avatar 관련 구문 return 추가
+    avatarUrl,
+    updateAvatar,
   };
 });

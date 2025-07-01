@@ -5,7 +5,10 @@ import { computed, reactive, ref } from 'vue';
 
 const auth = useAuthStore();
 const avatar = ref(null);
-const avatarPath = `/api/member/${auth.username}/avatar`;
+// const avatarPath = `/api/member/${auth.username}/avatar`;
+
+// (5) avatarPath 값을 store의 avatarUrl로 변경
+const avatarPath = computed(() => auth.avatarUrl);
 
 const member = reactive({
   username: auth.username,
@@ -29,6 +32,13 @@ const onSubmit = async () => {
     error.value = '';
     auth.changeProfile(member);
     alert('정보를 수정하였습니다.');
+    member.password = '';
+
+    // (6) 스토어의 타임스탬프 업데이터
+    if (member.avatar) {
+      // 선택된 이미지가 있다면
+      auth.updateAvatar();
+    }
   } catch (e) {
     error.value = e.response.data;
   }
