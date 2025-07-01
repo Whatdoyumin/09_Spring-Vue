@@ -16,7 +16,7 @@ export const useAuthStore = defineStore('auth', () => {
   const state = ref({ ...initState });
 
   // 로그인 여부
-  const isLogin = computed(() => !!state.value.user.username);
+  const isLogin = computed(() => !!state.vaslue.user.username);
 
   // 로그인 사용자 ID
   const username = computed(() => state.value.user.username);
@@ -41,11 +41,11 @@ export const useAuthStore = defineStore('auth', () => {
 
   // 로그인 액션
   const login = async (member) => {
-    state.value.token = 'test token';
-    state.value.user = {
-      username: member.username,
-      email: member.username + '@test.com',
-    };
+    //state.value.token = 'test token';
+    // state.value.user = {
+    //   username: member.username,
+    //   email: member.username + '@test.com',
+    // };
 
     // api 호출
     const { data } = await axios.post('/api/auth/login', member);
