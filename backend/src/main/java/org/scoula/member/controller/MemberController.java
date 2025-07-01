@@ -7,11 +7,13 @@ import lombok.extern.log4j.Log4j2;
 import org.scoula.common.util.UploadFiles;
 import org.scoula.member.dto.MemberDTO;
 import org.scoula.member.dto.MemberJoinDTO;
+import org.scoula.member.dto.MemberUpdateDTO;
 import org.scoula.member.service.MemberService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,5 +44,10 @@ public class MemberController {
     }
 
     UploadFiles.downloadImage(response, file);
+  }
+
+  @PutMapping("/{username}")
+  public ResponseEntity<MemberDTO> changeProfile(MemberUpdateDTO member) {
+    return ResponseEntity.ok(service.update(member));
   }
 }

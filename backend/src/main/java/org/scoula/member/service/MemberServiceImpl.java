@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.scoula.member.dto.MemberDTO;
 import org.scoula.member.dto.MemberJoinDTO;
+import org.scoula.member.dto.MemberUpdateDTO;
+import org.scoula.member.exception.PasswordMissmatchException;
 import org.scoula.member.mapper.MemberMapper;
 import org.scoula.security.account.domain.AuthVO;
 import org.scoula.security.account.domain.MemberVO;
@@ -64,5 +66,16 @@ public class MemberServiceImpl implements MemberService {
         throw new RuntimeException(e);
       }
     }
+  }
+
+  @Override
+  public MemberDTO update(MemberUpdateDTO member) {
+    MemberVO vo = mapper.get(member.getUsername());
+    if (!passwordEncoder.matches(member.getPassword(), vo.getPassword())) {  // 비밀번호 일치 확인
+      throw new PasswordMissmatchException();
+    }
+    mapper.update(vo);
+    saveAvatar(member.getAvatar(), member.getUsername());
+    return get(member.getUsername());
   }
 }
