@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.scoula.member.dto.ChangePasswordDTO;
 import org.scoula.member.dto.MemberDTO;
 import org.scoula.member.dto.MemberJoinDTO;
 import org.scoula.member.dto.MemberUpdateDTO;
@@ -77,5 +78,18 @@ public class MemberServiceImpl implements MemberService {
     mapper.update(vo);
     saveAvatar(member.getAvatar(), member.getUsername());
     return get(member.getUsername());
+  }
+
+  @Override
+  public void changePassword(ChangePasswordDTO changePassword) {
+    MemberVO member = mapper.get(changePassword.getUsername());
+
+    if (!passwordEncoder.matches(changePassword.getOldPassword(), member.getPassword())) {
+      throw new PasswordMissmatchException();
+    }
+
+    changePassword.setNewPassword(passwordEncoder.encode(changePassword.getNewPassword()));
+
+    mapper.updatePassword(changePassword);
   }
 }
