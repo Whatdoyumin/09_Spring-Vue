@@ -16,7 +16,7 @@ export const useAuthStore = defineStore('auth', () => {
   const state = ref({ ...initState });
 
   // 로그인 여부
-  const isLogin = computed(() => !!state.vaslue.user.username);
+  const isLogin = computed(() => !!state.value.user.username);
 
   // 로그인 사용자 ID
   const username = computed(() => state.value.user.username);
