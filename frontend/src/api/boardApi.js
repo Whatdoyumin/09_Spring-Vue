@@ -27,4 +27,16 @@ export default {
     console.log('BOARD POST: ', data);
     return data;
   },
+
+  async get(no) {
+    const { data } = await api.get(`${BASE_URL}/${no}`);
+    console.log('BOARD GET', data);
+    return data;
+  },
+
+  async delete(no) {
+    const { data } = await api.delete(`${BASE_URL}/${no}`);
+    console.log('BOARD DELETE: ', data);
+    return data;
+  },
 };
