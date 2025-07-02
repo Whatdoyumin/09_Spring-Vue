@@ -1,12 +1,9 @@
 package org.scoula.config;
 
-import org.scoula.security.config.SecurityConfig;
-import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-
-import javax.servlet.Filter;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletRegistration;
+import org.scoula.security.config.SecurityConfig;
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -33,14 +30,14 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
   }
 
   // POST body 문자 인코딩 필터 설정 - UTF-8 설정
-  protected Filter[] getServletFilters() {
-    CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-
-    characterEncodingFilter.setEncoding("UTF-8");
-    characterEncodingFilter.setForceEncoding(true);
-
-    return new Filter[]{characterEncodingFilter};
-  }
+//  protected Filter[] getServletFilters() {
+//    CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+//
+//    characterEncodingFilter.setEncoding("UTF-8");
+//    characterEncodingFilter.setForceEncoding(true);
+//
+//    return new Filter[]{characterEncodingFilter};
+//  }
 
   @Override
   protected void customizeRegistration(ServletRegistration.Dynamic registration) {
