@@ -64,9 +64,16 @@ public class BoardServiceImpl implements BoardService {
 
   @Override
   public BoardDTO update(BoardDTO board) {
-    log.info("update........" + board);
-    boardMapper.update(board.toVo());
+    log.info("update...... " + board);
+    BoardVO boardVO = board.toVo();
+    log.info("update...... " + boardVO);
+    boardMapper.update(boardVO);
 
+    // 파일 업로드 처리
+    List<MultipartFile> files = board.getFiles();
+    if (files != null && !files.isEmpty()) {
+      upload(board.getNo(), files);
+    }
     return get(board.getNo());
   }
 
@@ -102,9 +109,9 @@ public class BoardServiceImpl implements BoardService {
   private void upload(Long bno, List<MultipartFile> files) {
     for (MultipartFile part : files) {
       // 빈 파일은 건너뛰기
-        if (part.isEmpty()) {
-            continue;
-        }
+      if (part.isEmpty()) {
+        continue;
+      }
 
       try {
         // 파일을 서버에 저장
