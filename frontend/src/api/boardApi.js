@@ -39,4 +39,32 @@ export default {
     console.log('BOARD DELETE: ', data);
     return data;
   },
+
+  // 게시글 수정
+  async update(article) {
+    const formData = new FormData();
+    formData.append('no', article.no);
+    formData.append('title', article.title);
+    formData.append('writer', article.writer);
+    formData.append('content', article.content);
+
+    if (article.files) {
+      // 첨부파일 있는 경우
+      for (let i = 0; i < article.files.length; i++) {
+        formData.append('files', article.files[i]);
+      }
+    }
+    const { data } = await api.put(`${BASE_URL}/${article.no}`, article, {
+      headers,
+    });
+    console.log('BOARD PUT: ', data);
+    return data;
+  },
+
+  // 첨부파일 삭제
+  async deleteAttachment(no) {
+    const { data } = await api.delete(`${BASE_URL}/deleteAttachment/${no}`);
+    console.log('ATTACHMENT DELETE: ', data);
+    return data;
+  },
 };
