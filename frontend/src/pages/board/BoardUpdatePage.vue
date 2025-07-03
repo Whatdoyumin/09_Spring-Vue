@@ -13,7 +13,7 @@ const orgArticle = ref({});
 const files = ref(null);
 
 const back = () => {
-  router.push({ name: 'board/detail', params: { no } });
+  router.push({ name: 'board/detail', params: { no }, query: cr.query });
 };
 
 const removeFile = async (no, filename) => {
@@ -28,6 +28,7 @@ const submit = async () => {
   if (files.value.files.length > 0) {
     article.files = files.value.files;
   }
+
   await boardApi.update(article);
   router.push({ name: 'board/detail', params: { no }, query: cr.query });
 };
