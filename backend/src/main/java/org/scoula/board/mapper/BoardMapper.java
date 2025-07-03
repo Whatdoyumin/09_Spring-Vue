@@ -3,8 +3,13 @@ package org.scoula.board.mapper;
 import java.util.List;
 import org.scoula.board.domain.BoardAttachmentVO;
 import org.scoula.board.domain.BoardVO;
+import org.scoula.common.pagination.PageRequest;
 
 public interface BoardMapper {
+
+  int getTotalCount();
+
+  List<BoardVO> getPage(PageRequest pageRequest);
 
   // 게시글 목록 조회 (어노테이션 방식)
   //@Select("select * from tbl_board order by no desc")

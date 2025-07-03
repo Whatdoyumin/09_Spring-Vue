@@ -13,6 +13,8 @@ import lombok.extern.log4j.Log4j2;
 import org.scoula.board.domain.BoardAttachmentVO;
 import org.scoula.board.dto.BoardDTO;
 import org.scoula.board.service.BoardService;
+import org.scoula.common.pagination.Page;
+import org.scoula.common.pagination.PageRequest;
 import org.scoula.common.util.UploadFiles;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -118,5 +120,10 @@ public class BoardController {
   @DeleteMapping("/deleteAttachment/{no}")
   public ResponseEntity<Boolean> deleteAttachment(@PathVariable Long no) throws Exception {
     return ResponseEntity.ok(service.deleteAttachment(no));
+  }
+
+  @GetMapping("")
+  public ResponseEntity<Page> getList(PageRequest pageRequest) {
+    return ResponseEntity.ok(service.getPage(pageRequest));
   }
 }

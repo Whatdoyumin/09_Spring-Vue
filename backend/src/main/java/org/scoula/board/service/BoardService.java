@@ -3,8 +3,12 @@ package org.scoula.board.service;
 import java.util.List;
 import org.scoula.board.domain.BoardAttachmentVO;
 import org.scoula.board.dto.BoardDTO;
+import org.scoula.common.pagination.Page;
+import org.scoula.common.pagination.PageRequest;
 
 public interface BoardService {
+
+  Page<BoardDTO> getPage(PageRequest pageRequest);
 
   public List<BoardDTO> getList();
 
