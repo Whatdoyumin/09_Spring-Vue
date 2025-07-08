@@ -1,6 +1,7 @@
 <script setup>
 import TravelHeader from '@/components/travel/TravelHeader.vue';
 import TravelImages from '@/components/travel/TravelImages.vue';
+import TravelMap from '@/components/travel/TravelMap.vue';
 import { useRoute, useRouter } from 'vue-router';
 import api from '@/api/travelApi';
 import { ref } from 'vue';
@@ -38,6 +39,8 @@ load();
   </div>
 
   <!-- 지도 위치 -->
+  <travel-map :title="travel.title" :address="travel.address" />
+
   <div class="my-5">
     <button class="btn btn-primary me-2" @click="back">
       <i class="fa-solid fa-list"></i> 목록
