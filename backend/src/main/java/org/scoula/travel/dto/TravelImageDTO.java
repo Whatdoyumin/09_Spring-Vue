@@ -13,7 +13,7 @@ import org.scoula.travel.domain.TravelImageVO;
 @Builder
 public class TravelImageDTO {
 
-  private static final String BASE = "c:/upload/travel/";
+  private static final String BASE = "/Users/whatdoyumin/upload/travel/";
   private long no;
   private String filename;
   private long travelNo;
